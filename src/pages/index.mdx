@@ -1,0 +1,88 @@
+---
+layout: ../layouts/Layout.astro
+title: Learning natural movements by imitating from demonstrations
+description: Simple project page template for your research paper, built with Astro and Tailwind CSS
+favicon: /favicon.svg
+thumbnail: /screenshot.png
+---
+
+import { Image } from "astro:assets";
+
+import Layout from "../layouts/Layout.astro";
+
+import Header from "../components/Header.astro";
+import TwoColumns from "../components/TwoColumns.astro";
+import Video from "../components/Video.astro";
+import YouTubeVideo from "../components/YouTubeVideo.astro";
+import PDF from "../components/PDF.astro";
+import Figure from "../components/Figure.astro";
+import LaTeX from "../components/LaTeX.astro";
+import SmallCaps from "../components/SmallCaps.astro";
+import Splat from "../components/Splat.tsx"
+
+import CodeBlock from "../components/CodeBlock.astro";
+export const components = {pre: CodeBlock}
+
+import outside from "../assets/outside.mp4";
+import transformer from "../assets/transformer.webp";
+
+<Header
+  title={frontmatter.title}
+  authors={[
+    {
+      name: "Honghao Liao",
+      url: "https://github.com/LiaoHonghao",
+      institution: "VsisLab, Shandong University",
+      mail: "202214818@mail.sdu.edu.cn",
+      notes: [],
+    },
+  ]}
+  conference="Project Duration: 2023.09 - present"
+/>
+
+## Project Introduction
+
+In this work, we use imitation learning methods such as [GAIL](https://arxiv.org/abs/1606.03476) to enable legged robots to acquire natural movements by imitating from demonstration motion clips. With these techniques, we implemented a total of three different tasks on the legged robots BRUCE and Unitree AlienGo: ***single-clip imitation***, ***velocity-controllable omnidirectional locomotion***, and ***multiple motion skills integration***.
+
+## Demonstration
+
+### **Single-clip Imitation**
+
+This task is done based on [IsaacGymEnvs](https://github.com/isaac-sim/IsaacGymEnvs), using [GAIL](https://arxiv.org/abs/1606.03476) to enable the bipedal robot BRUCE to mimic from a single clip of reference motion. Where the reference motion clips are retargeted from the [CMU Motion Capture Dataset](http://mocap.cs.cmu.edu/) to BRUCE.
+
+<TwoColumns>
+  <Figure slot="left" caption="bipedal walk forward.">
+    <YouTubeVideo videoId="ePli8iRq7pE" />
+  </Figure>
+  <Figure slot="right" caption="bipedal dance.">
+    <YouTubeVideo videoId="haTYviZA4yo" />
+  </Figure>
+</TwoColumns>
+
+### **Velocity-controllable Omnidirectional Locomotion**
+
+In this task, we provide the bipedal robot BRUCE with a series of reference locomotion motion clips, including walking forward, walking leftward, steering, and jogging, etc. BRUCE learns velocity-controllable omnidirectional locomotion from these reference motion clips, where the forward velocity range is [-0.5, 1.5] m/s and the lateral velocity range is [-0.5, 0.5] m/s, and the yaw angular velocity range is [-0.8, 0.8] rad/s.
+
+<Figure caption="agile bipedal omnidirectional locomotion.">
+  <YouTubeVideo videoId="-fvKjpENr4Q" />
+</Figure>
+
+### **Multiple Motion Skills Integration**
+
+In this task, we use imitation learning to enable legged robots to integrate multiple natural motion skills into a single reinforcement learning policy from a given set of reference motion clips.
+
+<Figure caption="agile bipedal locomotion with jumping skill.">
+  <YouTubeVideo videoId="R9PvCrNR4i8" />
+</Figure>
+
+<Figure caption="bipedal robot walks in multiple styles.">
+  <YouTubeVideo videoId="FYt_6veKqSk" />
+</Figure>
+
+<Figure caption="agile quadruped robot locomotion.">
+  <YouTubeVideo videoId="pDW9RemLs1c" />
+</Figure>
+
+## Future work
+
+Although imitation learning can provide a good specification for motion learning in legged robots, we still often observe unnatural phenomena such as violent jittery and sliding steps (these phenomena are also occurring in the above demos), in the policies obtained from training. In the future, we will continue to explore these phenomena in depth, and try to propose some novel methods to allow the robot to learn movements more natural.
